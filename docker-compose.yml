@@ -1,9 +1,9 @@
+version: '2'
+
 networks:
   todonet:
 
 services:
-
-### APPLICATION PART
 
   postgresdb:
     image: postgres
@@ -17,7 +17,7 @@ services:
       - POSTGRES_DB=mydb
 
   todobackend-springboot:
-    image: maeddes/todobackend-springboot:v2402
+    image: maeddes/todobackend-springboot:v2404
     networks:
       - todonet
     build:
@@ -39,7 +39,7 @@ services:
     depends_on:
       - postgresdb
 
-  todoui-flask:
+  frontend:
     image: todolist:latest
     networks:
       - todonet
@@ -47,10 +47,3 @@ services:
       - "3000:80"
     environment:
       - BACKEND_URL=http://localhost:8080
-
-  loadgenerator:
-    image: generator:v0.1
-    build:
-      context: ./loadgenerator
-    networks:
-      - todonet

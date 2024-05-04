@@ -7,7 +7,7 @@
 
   async function getAllTodos() {
     try {
-      const response = await fetch(`http://localhost:8080/todos`);
+      const response = await fetch(`http://localhost:8080/todos/`);
 
       if (response.ok) {
         const data = await response.json();
@@ -36,12 +36,10 @@
     }
   }
 
-  /**
-   * @param {number} index
-   */
-  async function removeTodo(index) {
+
+  async function removeTodo(todoToDelete) {
     try {
-      const response = await fetch(`http://localhost:8080/todos/${index}`, {
+      const response = await fetch(`http://localhost:8080/todos/${todoToDelete}`, {
         method: 'DELETE'
       });
 
@@ -61,9 +59,9 @@
   <button on:click={addTodo}>Add</button>
 
   <ul>
-    {#each $todos as todo, index}
+    {#each $todos as todo}
       <li>
-        {todo} <button on:click={() => removeTodo(index)}>Remove</button>
+        {todo} <button on:click={() => removeTodo(todo)}>Remove</button>
       </li>
     {/each}
   </ul>
