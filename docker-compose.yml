@@ -41,6 +41,9 @@ services:
 
   frontend:
     image: todolist:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     networks:
       - todonet
     ports:

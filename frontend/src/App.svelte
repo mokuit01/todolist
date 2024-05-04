@@ -2,12 +2,14 @@
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
 
+  const BACKEND_URL = import.meta.env.BACKEND_URL || process.env.BACKEND_URL;
+
   let todos = writable([]);
   let newTodo = writable('');
 
   async function getAllTodos() {
     try {
-      const response = await fetch(`http://localhost:8080/todos/`);
+      const response = await fetch(`${BACKEND_URL}/todos/`);
 
       if (response.ok) {
         const data = await response.json();
@@ -23,7 +25,7 @@
   async function addTodo() {
     try {
       const todoToSend = $newTodo
-      const response = await fetch(`http://localhost:8080/todos/${todoToSend}`, {
+      const response = await fetch(`${BACKEND_URL}/todos/${todoToSend}`, {
         method: 'POST'
       });
 
@@ -39,7 +41,7 @@
 
   async function removeTodo(todoToDelete) {
     try {
-      const response = await fetch(`http://localhost:8080/todos/${todoToDelete}`, {
+      const response = await fetch(`${BACKEND_URL}/todos/${todoToDelete}`, {
         method: 'DELETE'
       });
 
