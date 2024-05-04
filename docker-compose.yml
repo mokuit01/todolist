@@ -1,0 +1,56 @@
+networks:
+  todonet:
+
+services:
+
+### APPLICATION PART
+
+  postgresdb:
+    image: postgres
+    networks:
+      - todonet
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=matthias
+      - POSTGRES_DB=mydb
+
+  todobackend-springboot:
+    image: maeddes/todobackend-springboot:v2402
+    networks:
+      - todonet
+    build:
+      context: ./todobackend-springboot
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+#      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318 # http endpoint
+      - OTEL_EXPORTER_OTLP_ENDPOINT=otelcol:4317
+      - OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=otelcol:4317
+      - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=grpc
+      - OTEL_EXPORTER_OTLP_METRICS_PROTOCOL=grpc
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=todobackend-springboot
+      - OTEL_METRICS_EXPORTER=otlp,logging-otlp
+      - OTEL_LOGS_EXPORTER=none
+    depends_on:
+      - postgresdb
+
+  todoui-flask:
+    image: todolist:latest
+    networks:
+      - todonet
+    ports:
+      - "3000:80"
+    environment:
+      - BACKEND_URL=http://localhost:8080
+
+  loadgenerator:
+    image: generator:v0.1
+    build:
+      context: ./loadgenerator
+    networks:
+      - todonet
