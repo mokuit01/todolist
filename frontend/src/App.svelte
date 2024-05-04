@@ -5,7 +5,7 @@
   const BACKEND_URL = import.meta.env.BACKEND_URL || process.env.BACKEND_URL;
 
   let todos = writable([]);
-  let newTodo = writable('');
+  let newTodo = writable("");
 
   async function getAllTodos() {
     try {
@@ -23,30 +23,31 @@
   onMount(getAllTodos);
 
   async function addTodo() {
-    try {
-      const todoToSend = $newTodo
-      const response = await fetch(`${BACKEND_URL}/todos/${todoToSend}`, {
-        method: 'POST'
-      });
+    if ($newTodo) {
+      try {
+        const todoToSend = $newTodo;
+        const response = await fetch(`${BACKEND_URL}/todos/${todoToSend}`, {
+          method: "POST",
+        });
 
-      if (response.ok) {
-        newTodo.set('');
-        window.location.reload()
+        if (response.ok) {
+          newTodo.set("");
+          window.location.reload();
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
     }
   }
-
 
   async function removeTodo(todoToDelete) {
     try {
       const response = await fetch(`${BACKEND_URL}/todos/${todoToDelete}`, {
-        method: 'DELETE'
+        method: "DELETE",
       });
 
       if (response.ok) {
-        window.location.reload()
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error:", error);
