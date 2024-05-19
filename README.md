@@ -25,7 +25,7 @@ cd todolist
 
 2. Start the application by running Docker Compose:
 ```bash
-docker-compose up
+docker compose up
 ```
 
 The postgres database will start on port 5432, The backend on port 8080 and the frontend on port 3000.
