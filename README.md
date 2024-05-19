@@ -8,6 +8,8 @@ This is a simple todo app that allows you to add and remove tasks.
 
 * Docker installed on your machine
 
+### Installation
+
 1. Clone this repository to your local machine:
 ```bash
 git clone https://github.com/mokuit01/todolist.git
@@ -17,7 +19,7 @@ git clone https://github.com/mokuit01/todolist.git
 cd todolist
 ```
 
-## Usage
+### Usage
 
 1. Open the `docker-compose.yml` file to update the `BACKEND_URL` variable if necessary (default is: http://localhost:8080)
 
