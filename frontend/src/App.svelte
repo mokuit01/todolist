@@ -2,12 +2,13 @@
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
 
-  const BACKEND_URL = import.meta.env.BACKEND_URL || process.env.BACKEND_URL;
+  const BACKEND_URL = window.injectedEnv.BACKEND_URL;
 
   let todos = writable([]);
   let newTodo = writable("");
 
   async function getAllTodos() {
+
     try {
       const response = await fetch(`${BACKEND_URL}/todos/`);
 

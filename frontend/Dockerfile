@@ -1,11 +1,16 @@
 FROM node:latest AS build
 
 WORKDIR /app
-ENV BACKEND_URL ${BACKEND_URL:-http://localhost:8080}
 COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
 FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
+
+WORKDIR /usr/share/nginx/html
+RUN apk add --no-cache gettext
+COPY nginx-entrypoint.sh /
+COPY --from=build /app/build ./
+COPY --from=build /app/src/inject.template.js ./
+ENTRYPOINT [ "sh", "/nginx-entrypoint.sh" ]
