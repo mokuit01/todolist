@@ -40,10 +40,7 @@ services:
       - postgresdb
 
   frontend:
-    image: todolist:latest
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: mokuit01/todolist-frontend:latest
     networks:
       - todonet
     ports:
