@@ -65,7 +65,8 @@
   <ul>
     {#each $todos as todo}
       <li>
-        {todo} <button on:click={() => removeTodo(todo)}>Remove</button>
+        <span>{todo}</span> 
+        <button on:click={() => removeTodo(todo)}>Remove</button>
       </li>
     {/each}
   </ul>

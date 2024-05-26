@@ -56,6 +56,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  flex-shrink: 0;
 }
 button:hover {
   border-color: #646cff;
@@ -63,6 +64,32 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  align-items: center; /* Zentriere die Listeneinträge horizontal */
+  width: 600px;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+  width: 600px;
+  box-sizing: border-box;
+}
+
+span {
+  display: block;
+  word-wrap: break-word;
+  white-space: normal;
+  margin-right: 10px;
+  overflow: hidden;
 }
 
 @media (prefers-color-scheme: light) {
