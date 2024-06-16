@@ -17,7 +17,7 @@ services:
       - POSTGRES_DB=mydb
 
   todobackend-springboot:
-    image: maeddes/todobackend-springboot:v2404
+    image: maeddes/todobackend-springboot:hse24
     networks:
       - todonet
     build:
@@ -28,14 +28,6 @@ services:
     restart: unless-stopped
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-#      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318 # http endpoint
-      - OTEL_EXPORTER_OTLP_ENDPOINT=otelcol:4317
-      - OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=otelcol:4317
-      - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=grpc
-      - OTEL_EXPORTER_OTLP_METRICS_PROTOCOL=grpc
-      - OTEL_RESOURCE_ATTRIBUTES=service.name=todobackend-springboot
-      - OTEL_METRICS_EXPORTER=otlp,logging-otlp
-      - OTEL_LOGS_EXPORTER=none
     depends_on:
       - postgresdb
 
